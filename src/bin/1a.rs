@@ -6,12 +6,7 @@ fn main() -> Result<(), Error> {
         .lines()
         .map(|l| l.map(|v| v.parse().unwrap()))
         .collect::<Result<Vec<u32>, _>>()?;
-    let (n, _) = entries.iter().fold((0_u32, None), |(n, prev), &curr| {
-        match prev.map(|p| curr > p) {
-            Some(true) => (n + 1, Some(curr)),
-            _ => (n, Some(curr)),
-        }
-    });
+    let n = entries.windows(2).filter(|w| w[1] > w[0]).count();
     println!("{}", n);
     Ok(())
 }
