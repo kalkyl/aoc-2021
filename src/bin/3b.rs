@@ -6,10 +6,10 @@ enum RatingType {
     CO2,
 }
 
-fn rating(vec: &Vec<u16>, rating_type: RatingType) -> Option<u16> {
+fn rating(vec: &Vec<u16>, rating_type: RatingType) -> u32 {
     let mut list = vec.clone();
     let mut i = 11;
-    while list.len() > 1 {
+    while list.len() > 1 && i >= 0 {
         let (b1, b0): (Vec<u16>, Vec<u16>) = list.iter().partition(|&&x| ((x >> i) & 1) != 0);
         let mask = b1.len() >= b0.len();
         list = list
@@ -21,7 +21,7 @@ fn rating(vec: &Vec<u16>, rating_type: RatingType) -> Option<u16> {
             .collect();
         i -= 1;
     }
-    list.into_iter().next()
+    list.into_iter().next().unwrap() as _
 }
 
 fn main() -> Result<(), Error> {
@@ -29,8 +29,8 @@ fn main() -> Result<(), Error> {
         .lines()
         .map(|l| l.map(|v| u16::from_str_radix(&v, 2).unwrap()))
         .collect::<Result<Vec<_>, _>>()?;
-    let oxygen = rating(&entries, RatingType::O).unwrap();
-    let co2 = rating(&entries, RatingType::CO2).unwrap();
-    println!("{}", oxygen as u32 * co2 as u32);
+    let oxygen = rating(&entries, RatingType::O);
+    let co2 = rating(&entries, RatingType::CO2);
+    println!("{}", oxygen * co2);
     Ok(())
 }
