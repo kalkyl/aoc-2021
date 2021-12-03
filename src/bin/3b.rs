@@ -11,11 +11,12 @@ fn rating(vec: &Vec<u16>, rating_type: RatingType) -> Option<u16> {
     let mut i = 11;
     while list.len() > 1 {
         let (b1, b0): (Vec<u16>, Vec<u16>) = list.iter().partition(|&&x| ((x >> i) & 1) != 0);
+        let mask = b1.len() >= b0.len();
         list = list
             .into_iter()
             .filter(|&x| match rating_type {
-                RatingType::O => (((x >> i) & 1) != 0) == (b1.len() >= b0.len()),
-                RatingType::CO2 => (((x >> i) & 1) != 0) != (b1.len() >= b0.len()),
+                RatingType::O => (((x >> i) & 1) != 0) == mask,
+                RatingType::CO2 => (((x >> i) & 1) != 0) != mask,
             })
             .collect();
         i -= 1;
