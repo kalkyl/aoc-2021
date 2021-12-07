@@ -23,9 +23,9 @@ fn main() -> Result<(), Error> {
         .filter_map(|b| {
             for (i, call) in calls.iter().enumerate() {
                 let v = match b.get_mut(&call) {
-                    Some(v) => {
-                        *v = (v.0, v.1, true);
-                        Some((v.0, v.1))
+                    Some((x, y, m)) => {
+                        *m = true;
+                        Some((*x, *y))
                     }
                     _ => None,
                 };
