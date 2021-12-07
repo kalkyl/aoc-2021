@@ -7,7 +7,7 @@ fn main() -> Result<(), Error> {
     for f in fish {
         age_counts[f] += 1;
     }
-    for _ in 0..80 {
+    for _ in 0..256 {
         age_counts.rotate_left(1);
         age_counts[6] += age_counts[8];
     }
