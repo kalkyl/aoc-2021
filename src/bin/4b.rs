@@ -32,9 +32,8 @@ fn main() -> Result<(), Error> {
                     if b.values().filter(|n| n.0 == x).all(|n| n.2)
                         || b.values().filter(|n| n.1 == y).all(|n| n.2)
                     {
-                        let sum_unmarked: u32 =
-                            b.iter().filter(|(_, v)| !v.2).map(|(&n, _)| n as u32).sum();
-                        return Some((i, sum_unmarked * *call as u32));
+                        let sum: u32 = b.iter().filter(|(_, v)| !v.2).map(|(&n, _)| n as u32).sum();
+                        return Some((i, sum * *call as u32));
                     }
                 }
             }
