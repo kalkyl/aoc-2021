@@ -19,5 +19,6 @@ fn main() -> Result<(), Error> {
             }
         });
     println!("{}", x * y);
+    println!("{:?}", (x, y));
     Ok(())
 }
