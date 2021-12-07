@@ -30,8 +30,8 @@ fn main() -> Result<(), Error> {
                     _ => None,
                 };
                 if let Some((x, y)) = v {
-                    if &b.values().filter(|(nx, _, m)| *nx == x && *m).count() == &5
-                        || &b.values().filter(|(_, ny, m)| *ny == y && *m).count() == &5
+                    if b.values().filter(|n| n.0 == x).all(|n| n.2)
+                        || b.values().filter(|n| n.1 == y).all(|n| n.2)
                     {
                         let sum_unmarked: u32 =
                             b.iter().filter(|(_, v)| !v.2).map(|(&n, _)| n as u32).sum();
@@ -43,6 +43,6 @@ fn main() -> Result<(), Error> {
         })
         .min_by_key(|(calls, _)| *calls)
         .map(|(_, score)| score);
-    println!("{:?}", score);
+    println!("{:?}", score.unwrap());
     Ok(())
 }
