@@ -3,10 +3,10 @@ use std::{collections::HashMap, fs::read_to_string, io::Error};
 fn board_from_str(str: &&str) -> HashMap<u8, (usize, usize, bool)> {
     str.split('\n')
         .enumerate()
-        .map(|(y, r)| {
-            r.split_whitespace()
+        .map(|(y, row)| {
+            row.split_whitespace()
                 .enumerate()
-                .map(|(x, c)| (c.parse::<u8>().unwrap(), (x, y, false)))
+                .map(|(x, col)| (col.parse::<u8>().unwrap(), (x, y, false)))
                 .collect::<Vec<_>>()
         })
         .flatten()
@@ -16,7 +16,7 @@ fn board_from_str(str: &&str) -> HashMap<u8, (usize, usize, bool)> {
 fn main() -> Result<(), Error> {
     let input = read_to_string("./input/4.txt")?;
     let input: Vec<_> = input.split("\n\n").collect();
-    let calls: Vec<u8> = input[0].split(',').map(|s| s.parse().unwrap()).collect();
+    let calls: Vec<_> = input[0].split(',').map(|s| s.parse().unwrap()).collect();
     let mut boards: Vec<_> = input.iter().skip(1).map(board_from_str).collect();
     let score = boards
         .iter_mut()
@@ -30,8 +30,8 @@ fn main() -> Result<(), Error> {
                     _ => None,
                 };
                 if let Some((x, y)) = v {
-                    if &b.values().filter(|n| n.0 == x && n.2).count() == &5
-                        || &b.values().filter(|n| n.1 == y && n.2).count() == &5
+                    if &b.values().filter(|(nx, _, m)| *nx == x && *m).count() == &5
+                        || &b.values().filter(|(_, ny, m)| *ny == y && *m).count() == &5
                     {
                         let sum_unmarked: u32 =
                             b.iter().filter(|(_, v)| !v.2).map(|(&n, _)| n as u32).sum();
