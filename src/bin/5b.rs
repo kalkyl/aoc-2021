@@ -20,7 +20,7 @@ fn line_from_str(str: &str) -> ((usize, usize), (usize, usize)) {
 
 fn main() -> Result<(), Error> {
     let input = read_to_string("./input/5.txt")?;
-    let lines: Vec<_> = input.split("\n").map(line_from_str).collect();
+    let lines: Vec<_> = input.split('\n').map(line_from_str).collect();
     let mut map: HashMap<(usize, usize), usize> = HashMap::new();
     for ((x1, y1), (x2, y2)) in lines.iter() {
         if x1 == x2 || y1 == y2 {

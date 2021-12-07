@@ -22,7 +22,7 @@ fn main() -> Result<(), Error> {
         .iter_mut()
         .filter_map(|b| {
             for (i, call) in calls.iter().enumerate() {
-                if let Some((x, y)) = match b.get_mut(&call) {
+                if let Some((x, y)) = match b.get_mut(call) {
                     Some((x, y, m)) => {
                         *m = true;
                         Some((*x, *y))

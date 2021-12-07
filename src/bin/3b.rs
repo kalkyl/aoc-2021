@@ -6,8 +6,8 @@ enum RatingType {
     CO2,
 }
 
-fn rating(vec: &Vec<u16>, rating_type: RatingType) -> u32 {
-    let mut list = vec.clone();
+fn rating(slice: &[u16], rating_type: RatingType) -> u32 {
+    let mut list = slice.to_owned();
     let mut i = 11;
     while list.len() > 1 && i >= 0 {
         let (b1, b0): (Vec<u16>, Vec<u16>) = list.iter().partition(|&&x| ((x >> i) & 1) != 0);
