@@ -26,15 +26,13 @@ fn main() -> Result<(), Error> {
         if x1 == x2 || y1 == y2 {
             for y in (*y1.min(y2))..=(*y2.max(y1)) {
                 for x in *x1..=*x2 {
-                    let count = map.entry((x, y)).or_insert(0);
-                    *count += 1;
+                    *map.entry((x, y)).or_insert(0) += 1;
                 }
             }
         } else {
             for (i, x) in (*x1..=*x2).enumerate() {
                 let coord = if y2 > y1 { (x, y1 + i) } else { (x, y1 - i) };
-                let count = map.entry(coord).or_insert(0);
-                *count += 1;
+                *map.entry(coord).or_insert(0) += 1;
             }
         }
     }

@@ -28,8 +28,7 @@ fn main() -> Result<(), Error> {
     {
         for y in (*y1.min(y2))..=(*y2.max(y1)) {
             for x in *x1..=*x2 {
-                let count = map.entry((x, y)).or_insert(0);
-                *count += 1;
+                *map.entry((x, y)).or_insert(0) += 1;
             }
         }
     }
